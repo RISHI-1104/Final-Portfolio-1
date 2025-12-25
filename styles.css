@@ -1,0 +1,103 @@
+:root{
+  --bg:#FAF6F2; --surface:#ffffff; --text:#0B0B0B; --muted:#555; --accent:#FF3B30; --accent-2:#FF7A45;
+  --transition:400ms; --easing:cubic-bezier(.22,.12,.16,1);
+  --move-fast:250ms; --move-mid:420ms; --move-slow:700ms;
+}
+:root.dark{
+  --bg:#0f1114; --surface:#16181B; --text:#F5F6F7; --muted:#B8B9BD; --accent:#FF3B30; --accent-2:#FF7A45;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:var(--text); transition: background var(--transition) var(--easing), color var(--transition) var(--easing); text-align:left}
+.container{max-width:1100px; margin:0 auto; padding:28px}
+.skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:20px}
+.nav a{margin:0 10px;color:var(--text);text-decoration:none}
+.nav a{position:relative}
+.nav a::after{content:'';position:absolute;left:0;bottom:-6px;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform var(--move-fast) var(--easing);opacity:0.95}
+.nav a:hover::after,.nav a:focus::after{transform:scaleX(1)}
+.header-actions{display:flex;gap:10px}
+.btn{border-radius:10px;padding:10px 14px;border:1px solid transparent;background:transparent;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn-outline{border:1px solid var(--accent);color:var(--accent);background:transparent}
+.btn-ghost{background:transparent;color:var(--accent);border:none}
+.btn{transition:transform var(--move-fast) var(--easing), box-shadow var(--move-fast)}
+.btn:active{transform:translateY(1px) scale(.998)}
+.btn--magnetic{will-change:transform}
+.hero{padding:60px 0}
+.hero-grid{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+.label{font-size:12px;letter-spacing:2px;color:var(--accent)}
+.hero-heading{font-size:28px;line-height:1.02;margin:8px 0}
+.chips{margin:16px 0}
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0, 0, 0, 0.04);margin-right:8px;font-size:13px}
+.photo-ring{position:relative;width:320px;height:320px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.profile-photo{width:100%;height:100%;object-fit:cover;display:block}
+.ring-accent{position:absolute;inset:6px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,59,48,0.06);pointer-events:none}
+.ring-rot{transform-origin:center center;transition:transform 600ms var(--easing)}
+.section{padding:64px 0}
+.section-header{margin-bottom:18px}
+.lead{max-width:720px}
+.info-cards{display:flex;gap:12px;margin:18px 0}
+.info-cards .card{flex:1;padding:14px;border-radius:10px;background:var(--surface);box-shadow:0 6px 18px rgba(10,10,10,0.04)}
+.node-cluster{display:flex;gap:12px;align-items:center;margin-top:20px}
+.node{padding:10px 14px;border-radius:10px;background:var(--surface)}
+.node.central{font-weight:700}
+.node.small{animation:float 6s ease-in-out infinite}
+.cards-row{display:flex;gap:16px}
+.learn-card{flex:1;padding:18px;border-radius:12px;background:var(--surface)}
+.pill{background:var(--accent);color:#fff;padding:6px 10px;border-radius:999px;font-size:12px}
+.project-feature{margin:22px 0;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+.project-body{position:relative}
+.badge{position:absolute;right:14px;top:14px;background:var(--accent);color:#fff;padding:6px 8px;border-radius:6px;font-size:12px}
+.strength-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.strength-card{padding:18px;border-radius:12px;background:var(--surface)}
+.strength-card{transition:transform var(--move-fast) var(--easing), box-shadow var(--move-fast)}
+.topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.contact-grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
+.info-card{padding:12px;border-radius:10px;background:var(--surface);margin-bottom:10px}
+.site-footer{padding:28px 0;border-top:1px solid rgba(0,0,0,0.06)}
+/* Intro landing */
+.intro-landing{height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+.intro-inner{text-align:center}
+.intro-title{font-size:48px;margin:0}
+.intro-sub{margin-top:10px;color:var(--muted)}
+.intro-underline{height:2px;width:0;background:var(--accent);margin:12px auto 0;border-radius:2px}
+.intro-landing.glitch .intro-title{transform:translateX(-3px);text-shadow:-2px 0 var(--accent),2px 0 var(--accent-2)}
+.glitch{animation:glitch-shake 240ms steps(2, end)}
+
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+@keyframes glitch-shake{0%{transform:translateX(0)}20%{transform:translateX(-2px)}40%{transform:translateX(2px)}60%{transform:translateX(-1px)}80%{transform:translateX(1px)}100%{transform:translateX(0)}}
+
+/* Card hover tilt fallback */
+.project-feature.spotlight{transform:scale(1.02);box-shadow:0 30px 60px rgba(0,0,0,0.18);transition:transform var(--move-slow) var(--easing)}
+
+/* Button magnetic focus halo */
+.btn:focus{outline:3px solid rgba(255,59,48,0.12);outline-offset:2px}
+
+/* Back to top visible */
+.site-footer a{color:var(--muted);text-decoration:none}
+.back-to-top{opacity:0;transform:translateY(8px);transition:opacity var(--move-fast),transform var(--move-fast)}
+.back-to-top.show{opacity:1;transform:translateY(0)}
+/* Footer layout + content alignment */
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+/* Ensure main textual elements are left-aligned by default */
+.lead, .section-header h3, .section-header .label, .project-body, .strength-card, .topic-card, .info-card, .learn-card { text-align:left }
+
+/* Responsive tweaks */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .photo-ring{width:260px;height:260px}
+  .strength-grid{grid-template-columns:1fr}
+  .topic-grid{grid-template-columns:1fr}
+  .cards-row{flex-direction:column}
+  .footer-row{flex-direction:column;text-align:center}
+  .section, .hero-text, .lead { text-align:center }
+}
+/* theme helper */
+:root{color-scheme:light}
+:root.dark{color-scheme:dark}
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
