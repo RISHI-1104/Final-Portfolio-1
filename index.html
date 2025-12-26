@@ -1228,6 +1228,30 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* Scroll animation classes */
+    .scroll-animate {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scroll-animate.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered animation for lists */
+    .scroll-animate-stagger {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scroll-animate-stagger.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
 
     /* Responsive */
 
@@ -1347,7 +1371,7 @@
     <!-- Intro Landing -->
     <section id="intro-landing" class="intro-landing">
       <div class="intro-inner">
-        <h1 id="intro-title" class="intro-title">RISHIKESH PORTFOLIO</h1>
+        <h1 id="intro-title" class="intro-title">RISHIKESH'S PORTFOLIO</h1>
         <div class="intro-underline" id="intro-underline" aria-hidden="true"></div>
         <p class="intro-sub">
           Enter my world of code, systems, and automation.
@@ -1579,7 +1603,7 @@
             <div class="contact-grid">
               <!-- Form side -->
               <div class="contact-form">
-                 <form id="contact-form" action="https://formspree.io/f/xpqvaypz" method="POST" autocomplete="off">
+                 <form id="contact-form" action="https://formspree.io/f/xpqavypz" method="POST" autocomplete="off">
                   <div class="field-row">
                     <label class="form-label">
                       Your Name
@@ -1733,15 +1757,41 @@
     }
 
 
-    // contact form demo submit
+    // contact form submission
     const form = document.getElementById("contact-form");
     const statusEl = document.getElementById("form-status");
 
-
     if (form && statusEl) {
-      form.addEventListener("submit", (e) => {
-          statusEl.textContent = "Sending...";
-          statusEl.style.color = "#9ca3af";
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl.textContent = "Sending...";
+        statusEl.style.color = "#9ca3af";
+        statusEl.style.display = "block";
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: { "Accept": "application/json" }
+          });
+
+          if (response.ok) {
+            statusEl.textContent = "✓ Message sent! I'll get back to you soon.";
+            statusEl.style.color = "#22c55e";
+            form.reset();
+            setTimeout(() => {
+              statusEl.textContent = "";
+              statusEl.style.display = "none";
+            }, 5000);
+          } else {
+            throw new Error("Form submission failed");
+          }
+        } catch (error) {
+          statusEl.textContent = "✕ Error sending message. Try emailing directly.";
+          statusEl.style.color = "#f9735b";
+          console.error("Form error:", error);
+        }
       });
     }
   </script>

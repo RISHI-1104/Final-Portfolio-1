@@ -105,4 +105,38 @@
   // Node cluster gentle jitter
   document.querySelectorAll('.node.small').forEach(n=>{ const delay = Math.random()*2000; n.style.transition = 'transform 5s ease-in-out'; setTimeout(function loop(){ const tx = (Math.random()-0.5)*6; const ty = (Math.random()-0.5)*6; n.style.transform = `translate(${tx}px, ${ty}px)`; setTimeout(loop, 4000 + Math.random()*3000); }, delay); });
 
+  // Scroll animation observer
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+
+    document.querySelectorAll('.scroll-animate, .scroll-animate-stagger').forEach(el=>observer.observe(el));
+  }
+
+  // Add scroll animation class to text elements
+  setTimeout(()=>{
+    document.querySelectorAll('h2, h3, h4, h5, p, .lead').forEach(el=>{
+      if(!el.classList.contains('intro-title') && !el.closest('form')){
+        el.classList.add('scroll-animate');
+      }
+    });
+    
+    // Re-observe new elements
+    if('IntersectionObserver' in window){
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('in-view');
+          }
+        });
+      }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+      document.querySelectorAll('.scroll-animate, .scroll-animate-stagger').forEach(el=>observer.observe(el));
+    }
+  }, 100);
+
 })();
